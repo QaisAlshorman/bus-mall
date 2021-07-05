@@ -66,10 +66,11 @@ renderImages();
 
 // adding event listner to the imeges seperatlly
 
-leftImageElement.addEventListener('click', handleClick);
-middleImageElemnt.addEventListener('click', handleClick);
-rightImageElement.addEventListener('click', handleClick);
+// leftImageElement.addEventListener('click', handleClick);
+// middleImageElemnt.addEventListener('click', handleClick);
+// rightImageElement.addEventListener('click', handleClick);
 section1.addEventListener('click', handleClick);
+
 
 function handleClick(event) {
   counter++;
@@ -88,6 +89,10 @@ function handleClick(event) {
     }
     renderImages();
   } else {
+    let btnElm ;
+    btnElm = document.getElementById('btn');
+    btnElm = addEventListener('click',handleClick);
+    section1.removeEventListener('click',handleClick);
     renderList();
   }
 
