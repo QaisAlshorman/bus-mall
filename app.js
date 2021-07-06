@@ -5,11 +5,11 @@ let rightImageElement = document.getElementById('right-image');
 // If we wanna to select the section itself
 let section1 = document.getElementById('sec-one');
 // creating Array for names
-let arrayOfNames=[];
+let arrayOfNames = [];
 // creating varible to the nuber of attemps
 let maxAttempts = 25;
 // creating Array tu the number of votes
-let numberOfvotes=[];
+let numberOfvotes = [];
 // creating Array to number of shown
 let numberOfShown = [];
 // max = counter stop the event !
@@ -22,6 +22,7 @@ function Proudect(name, source) {
   this.shown = 0;
   Proudect.globArr.push(this);
   arrayOfNames.push(name);
+  this.previouslyShown = false;
 }
 Proudect.globArr = [];
 new Proudect('pen', 'img/pen.jpg');
@@ -53,20 +54,40 @@ function renderImages() {
   leftIndex = generateRandomIndex();
   middleIndex = generateRandomIndex();
   rightIndex = generateRandomIndex();
+
   while (leftIndex === rightIndex || leftIndex === middleIndex || middleIndex === rightIndex) {
     leftIndex = generateRandomIndex();
     middleIndex = generateRandomIndex();
   }
 
 
+
+
   leftImageElement.src = Proudect.globArr[leftIndex].source;
   Proudect.globArr[leftIndex].shown++;
+  Proudect.globArr[leftIndex].previouslyShown = true;
 
   middleImageElemnt.src = Proudect.globArr[middleIndex].source;
   Proudect.globArr[middleIndex].shown++;
+  Proudect.globArr[middleIndex].previouslyShown = true;
 
   rightImageElement.src = Proudect.globArr[rightIndex].source;
   Proudect.globArr[rightIndex].shown++;
+  Proudect.globArr[rightIndex].previouslyShown = true;
+
+
+
+  while (Proudect.globArr[leftIndex].previouslyShown || Proudect.globArr[middleIndex].previouslyShown || Proudect.globArr[rightIndex].previouslyShown) {
+
+    leftImageElement = document.getElementById('left-image');
+    middleImageElemnt = document.getElementById('midlle-image');
+    rightImageElement = document.getElementById('right-image');
+  }
+  for (let i = 0; i < Proudect.globArr.length; i++) {
+    Proudect.globArr[i].previouslyShown = false;
+  }
+
+
 
 }
 renderImages();
@@ -101,22 +122,26 @@ function handleClick(event) {
 
 
 
-  } else {
+  }
+
+  else {
 
     const btnElm = document.getElementById('btn');
     btnElm.addEventListener('click', btnClicing);
+    // RenderChart();
     section1.removeEventListener('click', handleClick);
 
   }
-
-
 }
+
+
+
 
 function btnClicing() {
   const btnElm = document.getElementById('btn');
   btnElm.removeEventListener('click', handleClick);
   renderList();
-  
+
 
 }
 
@@ -126,8 +151,10 @@ function renderList() {
   for (let i = 0; i < Proudect.globArr.length; i++) {
     li = document.createElement('li');
     ul.appendChild(li);
-    li.textContent = `${Proudect.globArr[i].name} has this number of votes ${Proudect.globArr[i].votes} and has this numberOfvotes.push(Proudect.globArr[i].shown);
-    console.log(`${Proudect.globArr[i].votes}`);
+    li.textContent = `${Proudect.globArr[i].name} has this number of votes ${Proudect.globArr[i].votes} and has this number of shown ${Proudect.globArr[i].shown}`;
+    // modifying the votes and shown Arrays
+    numberOfvotes.push(Proudect.globArr[i].votes);
+    numberOfShown.push(Proudect.globArr[i].shown);
   }
   leftImageElement.removeEventListener('click', handleClick);
   middleImageElemnt.removeEventListener('click', handleClick);
@@ -135,34 +162,50 @@ function renderList() {
 }
 
 function generateRandomIndex() {
-  return Math.floor(Math.random() * Proudect.globArr.length);
- }
-// let voteArray= this.globArr[i].votes;
-// let shownArray=this.globArr[i].shown;
-// function RenderChart(){
+  return Math.floor(Math.random() * Proudect.globArr.length - 1);
+}
 
-// let var ctx = document.getElementById('myChart');
-//let var myChart = new Chart(ctx, {
-//   type: 'bar',
-//   data: {
-//     labels:arrayOfNames,
-//     datasets: [{
-//       label:'nmberOfvotes',
-//       labe2: 'numbrOfShown',
-//       data:voteArray ,
-//       data2:shownArray,
-//       backgroundColor: [
-//         'rgba(255, 99, 132, 0.2)',
 
-//       ],
-//       borderColor: [
-//         'rgba(255, 99, 132, 1)',
+// function RenderChart() {
 
-//       ],
-//       borderWidth: 1
-//     }]
-//   },
-//  
-// });
+//   let var ctx = document.getElementById('myChart');
+//   let var myChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//       labels: arrayOfNames,
+//       datasets: [{
+//         label: nmberOfvotes,
+
+//         data: voteArray,
+
+//         backgroundColor: [
+//           'rgba(255, 99, 132, 0.2)',
+
+//         ],
+//         borderColor: [
+//           'rgba(255, 99, 132, 1)',
+
+//         ],
+//         borderWidth: 1
+
+//       }, {
+
+
+//         label: numbrOfShown,
+//         backgroundColor: [
+//           'rgba(160, 99, 132, 0.2)',
+
+//         ],
+//         borderColor: [
+//           'rgba(180, 99, 132, 1)',
+
+//         ]
+
+
+
+//       }]
+
+//     },
+//   })
 // }
-// RenderChart();
+
