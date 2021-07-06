@@ -64,7 +64,7 @@ function renderImages() {
   }
 
 
-
+previousShown=[leftIndex,middleIndex,rightIndex]
 
   leftImageElement.src = Proudect.globArr[leftIndex].source;
   Proudect.globArr[leftIndex].shown++;
