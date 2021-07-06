@@ -24,7 +24,7 @@ function Proudect(name, source) {
   this.shown = 0;
   Proudect.globArr.push(this);
   arrayOfNames.push(name);
-  // savetoLs();
+
 }
 Proudect.globArr = [];
 new Proudect('pen', 'img/pen.jpg');
@@ -66,7 +66,7 @@ function renderImages() {
   }
 
 
-  
+
 
   leftImageElement.src = Proudect.globArr[leftIndex].source;
   console.log(leftIndex);
@@ -119,7 +119,7 @@ function handleClick(event) {
     }
     renderImages();
 
-
+    
 
   }
 
@@ -131,6 +131,7 @@ function handleClick(event) {
     section1.removeEventListener('click', handleClick);
 
   }
+  savetoLs();
 }
 
 
@@ -165,24 +166,24 @@ function generateRandomIndex() {
   return Math.floor(Math.random() * Proudect.globArr.length - 1);
 
 }
-// function savetoLs() {
-//   const convertedArr = localStorage.getItem(Proudect.globArr.names, Proudect.globArr.votes, Proudect.globArr.shown);
-//   localStorage.setItem('click', convertedArr);
-// }
+function savetoLs() {
+  const convertedArr = JSON.stringify(Proudect.globArr);
+  localStorage.setItem('click', convertedArr);
+}
 
-// function getFromLs() {
-//   const data = localStorage.getItem('click');
+function getFromLs() {
+  const data = localStorage.getItem('click');
 
-//   const parsedOrder = JSON.parse(data);
+  const parsedOrder = JSON.parse(data);
 
-//   if (parsedOrder) {
+  if (parsedOrder) {
 
-//     Proudect.globArr = parsedOrder;
-//     // [] = null
-//     renderImages();
-//   }
-// }
-// getFromLs();
+    Proudect.globArr = parsedOrder;
+    // [] = null
+    renderImages();
+  }
+}
+getFromLs();
 
 function renderChart() {
 
