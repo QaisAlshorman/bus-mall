@@ -15,7 +15,7 @@ let numberOfShown = [];
 // max = counter stop the event !
 let counter = 0;
 // creating an array to chick the previous shown
-let previousShown =0 ;
+let previousShown = [];
 // constructor to declear the name and the path  # of votes the time shown
 function Proudect(name, source) {
   this.name = name;
@@ -24,7 +24,7 @@ function Proudect(name, source) {
   this.shown = 0;
   Proudect.globArr.push(this);
   arrayOfNames.push(name);
-
+  // savetoLs();
 }
 Proudect.globArr = [];
 new Proudect('pen', 'img/pen.jpg');
@@ -32,7 +32,7 @@ new Proudect('pet-sweep', 'img/pet-sweep.jpg');
 new Proudect('scissors', 'img/scissors.jpg');
 new Proudect('shark', 'img/shark.jpg');
 new Proudect('sweep', 'img/sweep.png');
-new Proudect('tauntaun', 'img/tauntaun.jpg');
+new Proudect('ttt', 'img/ttt.jpg');
 new Proudect('unicorn', 'img/unicorn.jpg');
 new Proudect('water-can', 'img/water-can.jpg');
 new Proudect('bag', 'img/bag.jpg');
@@ -47,6 +47,8 @@ new Proudect('dog-duck', 'img/dog-duck.jpg');
 new Proudect('dragon', 'img/dragon.jpg');
 new Proudect('wine-glass', 'img/wine-glass.jpg');
 
+console.log(Proudect.globArr);
+
 // indexies of the imagies
 
 let leftIndex = null;
@@ -57,28 +59,33 @@ function renderImages() {
   middleIndex = generateRandomIndex();
   rightIndex = generateRandomIndex();
 
-  while (leftIndex === rightIndex || leftIndex === middleIndex || middleIndex === rightIndex||previousShown.includes(leftIndex)||previousShown.includes(rightIndex)===rightIndex||previousShown.includes(middleIndex)===middleIndex) {
+  while (leftIndex === rightIndex || leftIndex === middleIndex || middleIndex === rightIndex || previousShown.includes(leftIndex) || previousShown.includes(rightIndex) || previousShown.includes(middleIndex)) {
     leftIndex = generateRandomIndex();
     middleIndex = generateRandomIndex();
-    rightIndex=generateRandomIndex();
+    rightIndex = generateRandomIndex();
   }
 
 
-
+  
 
   leftImageElement.src = Proudect.globArr[leftIndex].source;
+  console.log(leftIndex);
+  // console.log('leftIndex   =>',Proudect.globArr[leftIndex].source);
+
   Proudect.globArr[leftIndex].shown++;
 
 
   middleImageElemnt.src = Proudect.globArr[middleIndex].source;
+  // console.log('middleIndex   =>', Proudect.globArr[middleIndex].source);
   Proudect.globArr[middleIndex].shown++;
 
 
   rightImageElement.src = Proudect.globArr[rightIndex].source;
+  // console.log('rightIndex   =>', Proudect.globArr[rightIndex].source);
   Proudect.globArr[rightIndex].shown++;
 
 
-
+  previousShown = [leftIndex, middleIndex, rightIndex];
 
 
 }
@@ -120,7 +127,7 @@ function handleClick(event) {
 
     const btnElm = document.getElementById('btn');
     btnElm.addEventListener('click', btnClicing);
-    // RenderChart();
+
     section1.removeEventListener('click', handleClick);
 
   }
@@ -148,6 +155,7 @@ function renderList() {
     numberOfvotes.push(Proudect.globArr[i].votes);
     numberOfShown.push(Proudect.globArr[i].shown);
   }
+  renderChart();
   leftImageElement.removeEventListener('click', handleClick);
   middleImageElemnt.removeEventListener('click', handleClick);
   rightImageElement.removeEventListener('click', handleClick);
@@ -155,49 +163,67 @@ function renderList() {
 
 function generateRandomIndex() {
   return Math.floor(Math.random() * Proudect.globArr.length - 1);
+
 }
-
-
-// function RenderChart() {
-
-//   let var ctx = document.getElementById('myChart');
-//   let var myChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//       labels: arrayOfNames,
-//       datasets: [{
-//         label: nmberOfvotes,
-
-//         data: voteArray,
-
-//         backgroundColor: [
-//           'rgba(255, 99, 132, 0.2)',
-
-//         ],
-//         borderColor: [
-//           'rgba(255, 99, 132, 1)',
-
-//         ],
-//         borderWidth: 1
-
-//       }, {
-
-
-//         label: numbrOfShown,
-//         backgroundColor: [
-//           'rgba(160, 99, 132, 0.2)',
-
-//         ],
-//         borderColor: [
-//           'rgba(180, 99, 132, 1)',
-
-//         ]
-
-
-
-//       }]
-
-//     },
-//   })
+// function savetoLs() {
+//   const convertedArr = localStorage.getItem(Proudect.globArr.names, Proudect.globArr.votes, Proudect.globArr.shown);
+//   localStorage.setItem('click', convertedArr);
 // }
+
+// function getFromLs() {
+//   const data = localStorage.getItem('click');
+
+//   const parsedOrder = JSON.parse(data);
+
+//   if (parsedOrder) {
+
+//     Proudect.globArr = parsedOrder;
+//     // [] = null
+//     renderImages();
+//   }
+// }
+// getFromLs();
+
+function renderChart() {
+
+  let ctx = document.getElementById('myChart');
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: arrayOfNames,
+      datasets: [{
+        label: arrayOfNames,
+
+        data: numberOfvotes,
+
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+
+        ],
+        borderWidth: 1
+
+      }, {
+
+
+        label: numberOfShown,
+        backgroundColor: [
+          'rgba(160, 99, 132, 0.2)',
+
+        ],
+        borderColor: [
+          'rgba(180, 99, 132, 1)',
+
+        ]
+
+
+
+      }]
+
+    },
+  });
+}
 
