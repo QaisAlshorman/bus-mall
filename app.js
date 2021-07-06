@@ -14,6 +14,8 @@ let numberOfvotes = [];
 let numberOfShown = [];
 // max = counter stop the event !
 let counter = 0;
+// creating an array to chick the previous shown
+let previousShown =0 ;
 // constructor to declear the name and the path  # of votes the time shown
 function Proudect(name, source) {
   this.name = name;
@@ -22,7 +24,7 @@ function Proudect(name, source) {
   this.shown = 0;
   Proudect.globArr.push(this);
   arrayOfNames.push(name);
-  this.previouslyShown = false;
+
 }
 Proudect.globArr = [];
 new Proudect('pen', 'img/pen.jpg');
@@ -55,9 +57,10 @@ function renderImages() {
   middleIndex = generateRandomIndex();
   rightIndex = generateRandomIndex();
 
-  while (leftIndex === rightIndex || leftIndex === middleIndex || middleIndex === rightIndex) {
+  while (leftIndex === rightIndex || leftIndex === middleIndex || middleIndex === rightIndex||previousShown.includes(leftIndex)||previousShown.includes(rightIndex)===rightIndex||previousShown.includes(middleIndex)===middleIndex) {
     leftIndex = generateRandomIndex();
     middleIndex = generateRandomIndex();
+    rightIndex=generateRandomIndex();
   }
 
 
@@ -65,27 +68,16 @@ function renderImages() {
 
   leftImageElement.src = Proudect.globArr[leftIndex].source;
   Proudect.globArr[leftIndex].shown++;
-  Proudect.globArr[leftIndex].previouslyShown = true;
+
 
   middleImageElemnt.src = Proudect.globArr[middleIndex].source;
   Proudect.globArr[middleIndex].shown++;
-  Proudect.globArr[middleIndex].previouslyShown = true;
+
 
   rightImageElement.src = Proudect.globArr[rightIndex].source;
   Proudect.globArr[rightIndex].shown++;
-  Proudect.globArr[rightIndex].previouslyShown = true;
 
 
-
-  while (Proudect.globArr[leftIndex].previouslyShown || Proudect.globArr[middleIndex].previouslyShown || Proudect.globArr[rightIndex].previouslyShown) {
-
-    leftImageElement = document.getElementById('left-image');
-    middleImageElemnt = document.getElementById('midlle-image');
-    rightImageElement = document.getElementById('right-image');
-  }
-  for (let i = 0; i < Proudect.globArr.length; i++) {
-    Proudect.globArr[i].previouslyShown = false;
-  }
 
 
 
