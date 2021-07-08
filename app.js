@@ -32,7 +32,7 @@ new Proudect('pet-sweep', 'img/pet-sweep.jpg');
 new Proudect('scissors', 'img/scissors.jpg');
 new Proudect('shark', 'img/shark.jpg');
 new Proudect('sweep', 'img/sweep.png');
-new Proudect('ttt', 'img/ttt.jpg');
+new Proudect('tauntaun', 'img/tauntaun.jpg');
 new Proudect('unicorn', 'img/unicorn.jpg');
 new Proudect('water-can', 'img/water-can.jpg');
 new Proudect('bag', 'img/bag.jpg');
@@ -46,11 +46,8 @@ new Proudect('cthulhu', 'img/cthulhu.jpg');
 new Proudect('dog-duck', 'img/dog-duck.jpg');
 new Proudect('dragon', 'img/dragon.jpg');
 new Proudect('wine-glass', 'img/wine-glass.jpg');
-
 console.log(Proudect.globArr);
-
 // indexies of the imagies
-
 let leftIndex = null;
 let middleIndex = null;
 let rightIndex = null;
@@ -58,7 +55,6 @@ function renderImages() {
   leftIndex = generateRandomIndex();
   middleIndex = generateRandomIndex();
   rightIndex = generateRandomIndex();
-
   while (leftIndex === rightIndex || leftIndex === middleIndex || middleIndex === rightIndex || previousShown.includes(leftIndex) || previousShown.includes(rightIndex) || previousShown.includes(middleIndex)) {
     leftIndex = generateRandomIndex();
     middleIndex = generateRandomIndex();
@@ -71,51 +67,31 @@ function renderImages() {
   leftImageElement.src = Proudect.globArr[leftIndex].source;
   console.log(leftIndex);
   // console.log('leftIndex   =>',Proudect.globArr[leftIndex].source);
-
   Proudect.globArr[leftIndex].shown++;
-
-
   middleImageElemnt.src = Proudect.globArr[middleIndex].source;
   // console.log('middleIndex   =>', Proudect.globArr[middleIndex].source);
   Proudect.globArr[middleIndex].shown++;
-
-
   rightImageElement.src = Proudect.globArr[rightIndex].source;
   // console.log('rightIndex   =>', Proudect.globArr[rightIndex].source);
   Proudect.globArr[rightIndex].shown++;
-
-
   previousShown = [leftIndex, middleIndex, rightIndex];
-
-
 }
 renderImages();
-
 // adding event listner to the imeges seperatlly
-
 // leftImageElement.addEventListener('click', handleClick);
 // middleImageElemnt.addEventListener('click', handleClick);
 // rightImageElement.addEventListener('click', handleClick);
-
 section1.addEventListener('click', handleClick);
-
-
-
 function handleClick(event) {
   counter++;
-
   if (maxAttempts >= counter) {
     if (event.target.id === 'left-image') {
       Proudect.globArr[leftIndex].votes++;
-
     } else if (event.target.id === 'right-image') {
       Proudect.globArr[rightIndex].votes++;
-
-
     }
     else if (event.target.id === 'midlle-image') {
       Proudect.globArr[middleIndex].votes++;
-
     }
     renderImages();
 
@@ -124,10 +100,8 @@ function handleClick(event) {
   }
 
   else {
-
     const btnElm = document.getElementById('btn');
     btnElm.addEventListener('click', btnClicing);
-
     section1.removeEventListener('click', handleClick);
 
   }
@@ -135,16 +109,11 @@ function handleClick(event) {
 }
 
 
-
-
 function btnClicing() {
   const btnElm = document.getElementById('btn');
   btnElm.removeEventListener('click', handleClick);
   renderList();
-
-
 }
-
 function renderList() {
   const ul = document.getElementById('unList');
   let li;
@@ -161,7 +130,6 @@ function renderList() {
   middleImageElemnt.removeEventListener('click', handleClick);
   rightImageElement.removeEventListener('click', handleClick);
 }
-
 function generateRandomIndex() {
   return Math.floor(Math.random() * Proudect.globArr.length - 1);
 
@@ -193,38 +161,25 @@ function renderChart() {
     data: {
       labels: arrayOfNames,
       datasets: [{
-        label: arrayOfNames,
-
+        label:'numberOfVote',
         data: numberOfvotes,
-
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
-
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
-
         ],
         borderWidth: 1
-
       }, {
-
-
-        label: numberOfShown,
+        label: 'numberOfShown',
+        data: numberOfShown,
         backgroundColor: [
           'rgba(160, 99, 132, 0.2)',
-
         ],
         borderColor: [
           'rgba(180, 99, 132, 1)',
-
         ]
-
-
-
       }]
-
     },
   });
 }
-
