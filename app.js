@@ -140,7 +140,7 @@ function renderList() {
 }
 function generateRandomIndex() {
   return Math.floor(Math.random() * Proudect.globArr.length);
- 
+
 
 }
 function savetoLs() {
@@ -156,7 +156,7 @@ function getFromLs() {
   if (parsedOrder) {
 
     Proudect.globArr = parsedOrder;
-   
+
   }
 }
 getFromLs();
